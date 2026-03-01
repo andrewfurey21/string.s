@@ -1,0 +1,35 @@
+# libc's string.h but in x64
+
+Reimplementing some of libc's string functions but in x64 assembly. Runs on linux.
+
+`test.c` uses `-nostdlib`. `art0.s` sets up the main function.
+
+## includes:
+
+* [ ] memset
+* [ ] memcpy
+* [ ] memmove
+* [ ] memcmp
+* [ ] memchr
+* [ ] memccpy
+* [ ] strcpy
+* [ ] strlen
+* [ ] strncpy
+* [ ] strcat
+* [ ] strncat
+* [ ] strxfrm
+* [ ] strcmp
+* [ ] strncmp
+* [ ] strcoll
+* [ ] strchr
+* [ ] strrchr
+* [ ] strspn
+* [ ] strcspn
+* [ ] strpbrk
+* [ ] strstr
+* [ ] strtok
+* [ ] strstr
+
+## extras
+
+* [ ] strrev
