@@ -10,5 +10,5 @@ Reimplementing some of libc's string functions but in x64 assembly. Runs on linu
 - [x] memcpy
 - [x] memmove
 - [x] memcmp
-- [ ] memchr
-- [ ] memccpy
+- [x] memchr
+- [x] memccpy
