@@ -109,12 +109,53 @@ void test_memchr() {
   test_expression(result == NULL, "test_memchr failed, wrong not found.");
 }
 
+void test_memccpy() {
+  const u64 n = 10;
+  u8 a[n], b[n];
+
+  int until = 'd';
+  const u8 seta = 'a';
+  const u8 setb = 'b';
+  void * result;
+
+  // copy all
+  memset(a, seta, n);
+  memset(b, setb, n);
+  result = memccpy(b, a, until, n);
+  test_expression(memcmp(a, b, n) == 0, "test_memccpy failed, wrong copy all.");
+  test_expression(result == b + n, "test_memccpy failed, wrong copy all return.");
+
+  // copy first
+  memset(b, setb, n);
+  a[0] = until;
+  result = memccpy(b, a, until, n);
+  test_expression(b[0] == until, "test_memccpy failed, wrong copy first.");
+  test_expression(result == b + 1, "test_memccpy failed, wrong copy first return.");
+
+  // copy until
+  memset(a, seta, n);
+  memset(b, setb, n);
+  const u64 m = n - 5;
+  a[m - 1] = until;
+  result = memccpy(b, a, until, n);
+  test_expression(memcmp(b, a, m) == 0, "test_memccpy failed, wrong copy until.");
+  test_expression(b[m - 1] == until, "test_memccpy failed, wrong copy until end.");
+  test_expression(result == b + m, "test_memccpy failed, wrong copy until return.");
+
+  // copy none
+  memset(a, seta, n);
+  memset(b, setb, n);
+  result = memccpy(b, a, until, 0);
+  test_expression(result == b, "test_memccpy failed, wrong copy none return.");
+}
+
 int main() {
   test_memset();
   test_memcpy();
   test_memmove();
   test_memcmp();
   test_memchr();
+  test_memccpy();
 
   if (tests_failed == 0) {
     println0("tests pass.");

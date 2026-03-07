@@ -5,6 +5,7 @@
 .global memmove
 .global memcmp
 .global memchr
+.global memccpy
 
 .section .text
 
@@ -105,4 +106,21 @@ _memchr_start:
 _memchr_found:
     mov rax, rdi
 _memchr_end:
+    ret
+
+# void * memccpy(void * d, const void * s, i32 c, u64 n);
+memccpy:
+    xor rax, rax
+    mov r9, rdi
+_memccpy_start:
+    cmp rax, rcx
+    je _memccpy_end
+    inc rax
+    mov r8b, BYTE PTR [rsi]
+    movsb
+    cmp dl, r8b
+    je _memccpy_end
+    jmp _memccpy_start
+_memccpy_end:
+    lea rax, [r9 + rax]
     ret
