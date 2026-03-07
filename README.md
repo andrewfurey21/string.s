@@ -17,19 +17,7 @@ Reimplementing some of libc's string functions but in x64 assembly. Runs on linu
 * [ ] strncpy
 * [ ] strcat
 * [ ] strncat
-* [ ] strxfrm
-* [ ] strcmp
-* [ ] strncmp
-* [ ] strcoll
-* [ ] strchr
-* [ ] strrchr
 * [ ] strspn
-* [ ] strcspn
 * [ ] strpbrk
 * [ ] strstr
 * [ ] strtok
-* [ ] strstr
-
-## extras
-
-* [ ] strrev
