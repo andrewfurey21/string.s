@@ -1,12 +1,15 @@
 
 #include "string.h"
 
-void test_expression(u8 x, const char * msg) {
+void println0(const char * msg) {
   u64 n = 0;
   while (msg[n++]);
+  println(msg, n);
+}
 
+void test_expression(u8 x, const char * msg) {
   if (!x) {
-    println(msg, n);
+    println0(msg);
     exit(-1);
   }
 }
@@ -25,5 +28,6 @@ void test_memset() {
 
 int main() {
   test_memset();
+  println0("tests pass.");
   return 0;
 }
