@@ -15,7 +15,7 @@ void println(const char *, const u64 len);
 void * memset(const void * s, i32 c, u64 n);
 
 // copy n bytes from s to d. d and s cannot overlap.
-// void * memcpy(void * d, const void * s, size_t n);
+void * memcpy(void * d, const void * s, u64 n);
 
 // copy n bytes from s to d. d and s can overlap. s saved into
 // temp buffer.
