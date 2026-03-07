@@ -24,15 +24,15 @@ void * memmove(void * d, const void * s, u64 n);
 
 // 0 if s1 == s2, 1 if first differing byte in s1 > s2, else -1
 // unsigned u8s.
-// i32 memcmp(const void * s1, const void * s2, size_t n);
+i32 memcmp(const void * s1, const void * s2, u64 n);
 
 // search for unsigned u8 c in first n bytes of s
-// void * memchr(const void * s, i32 c, size_t n);
+// void * memchr(const void * s, i32 c, u64 n);
 
 // copies first n bytes of s to d until c (unsigned u8). non-overlapping.
-// void * memccpy(void * d, const void * s, i32 c, size_t n);
+// void * memccpy(void * d, const void * s, i32 c, u64 n);
 
-// size_t strlen(const u8 * s);
+// u64 strlen(const u8 * s);
 
 // return d.
 // u8 * strcpy(u8 * d, const u8 * s);
@@ -41,17 +41,17 @@ void * memmove(void * d, const void * s, u64 n);
 // strcpy, copy n bytes to d from s.
 // if s < n, pad d with null bytes up to n.
 // if d < n, truncated.
-// u8 * strncpy(u8 * d, const u8 * s, size_t n);
+// u8 * strncpy(u8 * d, const u8 * s, u64 n);
 
 // d must be big enough. ub otherwise.
 // size of d buffer >= strlen(d) + strlen(s) + 1.
 // u8 * strcat(u8 * d, u8 * const s);
 
 // append at most n non null bytes of s to d, and null terminate.
-// u8 * strncat(u8 * d, const u8 * s, size_t n);
+// u8 * strncat(u8 * d, const u8 * s, u64 n);
 
 // length in bytes of first s chars that are in accept
-// size_t strspn(const char * s, const char * accept);
+// u64 strspn(const char * s, const char * accept);
 
 // pointer to first char of s in accept
 // char * strpbrk(const char * s, const char * accept);

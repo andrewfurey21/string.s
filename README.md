@@ -6,18 +6,18 @@ Reimplementing some of libc's string functions but in x64 assembly. Runs on linu
 
 ## includes:
 
-* [ ] memset
-* [ ] memcpy
-* [ ] memmove
-* [ ] memcmp
-* [ ] memchr
-* [ ] memccpy
-* [ ] strcpy
-* [ ] strlen
-* [ ] strncpy
-* [ ] strcat
-* [ ] strncat
-* [ ] strspn
-* [ ] strpbrk
-* [ ] strstr
-* [ ] strtok
+- [x] memset
+- [x] memcpy
+- [x] memmove
+- [x] memcmp
+- [ ] memchr
+- [ ] memccpy
+- [ ] strcpy
+- [ ] strlen
+- [ ] strncpy
+- [ ] strcat
+- [ ] strncat
+- [ ] strspn
+- [ ] strpbrk
+- [ ] strstr
+- [ ] strtok

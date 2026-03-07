@@ -7,5 +7,4 @@ all:
 	@ld ./build/art0.o ./build/test.o ./build/string.o ./build/helpers.o -o test
 
 clean:
-	@echo "Deleting ./build"
 	@rm -rf build

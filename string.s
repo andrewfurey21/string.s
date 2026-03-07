@@ -3,6 +3,7 @@
 .global memset
 .global memcpy
 .global memmove
+.global memcmp
 
 .section .text
 
@@ -63,9 +64,26 @@ _memmove_save_d:
     inc rax
     jmp _memmove_save_d
 _memmove_end_d:
-
     mov rax, rcx
-
     leave
     ret
 
+# i32 memcmp(const void * s1, const void * s2, u64 n);
+memcmp:
+    xor rcx, rcx
+    xor rax, rax
+_memcmp_start:
+    cmp rcx, rdx
+    je _memcmp_end
+    cmpsb
+    jb _memcmp_greater
+    ja _memcmp_less
+    inc rcx
+    jmp _memcmp_start
+_memcmp_greater:
+    mov eax, 1
+    jmp _memcmp_end
+_memcmp_less:
+    mov eax, -1
+_memcmp_end:
+    ret
