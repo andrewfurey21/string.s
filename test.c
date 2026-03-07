@@ -69,7 +69,7 @@ void test_memmove() {
   for (u64 i = 0; i < n; i++) {
     test_expression(b[i] == a[i], "test_memmove (overlapping) failed.");
   }
-  test_expression(x == m, "test_memmove (overlapping) return failed.");
+  test_expression(x == b, "test_memmove (overlapping) return failed.");
 }
 
 int main() {

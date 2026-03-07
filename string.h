@@ -9,6 +9,7 @@ void exit(i32 exit_code);
 void println(const char *, const u64 len);
 
 // Returns pointers for "composibility".
+// all allocations done on stack.
 
 // set n bytes to c at s
 // i32 because of archaic c history reasons i think
@@ -19,7 +20,7 @@ void * memcpy(void * d, const void * s, u64 n);
 
 // copy n bytes from s to d. d and s can overlap. s saved into
 // temp buffer.
-// void * memmove(void * d, const void * s, size_t n);
+void * memmove(void * d, const void * s, u64 n);
 
 // 0 if s1 == s2, 1 if first differing byte in s1 > s2, else -1
 // unsigned u8s.
