@@ -4,6 +4,7 @@
 .global memcpy
 .global memmove
 .global memcmp
+.global memchr
 
 .section .text
 
@@ -35,6 +36,7 @@ _memcpy_end:
     ret
 
 # void * memmove(void * d, const void * s, u64 n);
+# could be smarter and not save what you don't need.
 memmove:
     push rbp
     mov rbp, rsp
@@ -86,4 +88,21 @@ _memcmp_greater:
 _memcmp_less:
     mov eax, -1
 _memcmp_end:
+    ret
+
+# void * memchr(const void * s, i32 c, u64 n);
+memchr:
+    xor rcx, rcx
+    xor rax, rax
+_memchr_start:
+    cmp rcx, rdx
+    je _memchr_end
+    cmp BYTE PTR [rdi], sil
+    je _memchr_found
+    inc rdi
+    inc rcx
+    jmp _memchr_start
+_memchr_found:
+    mov rax, rdi
+_memchr_end:
     ret

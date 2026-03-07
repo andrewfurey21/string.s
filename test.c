@@ -73,7 +73,7 @@ void test_memmove() {
 }
 
 void test_memcmp() {
-  const u64 n = 3;
+  const u64 n = 20;
   const u8 set = 'b';
   u8 a[n], b[n];
   memset(a, set, n);
@@ -82,14 +82,31 @@ void test_memcmp() {
   i32 equal = memcmp(a, b, n);
   test_expression(equal == 0, "test_memcmp failed, not equal.");
 
-  a[1] = 'd';
+  a[10] = 'd';
   i32 greater = memcmp(a, b, n);
   test_expression(greater == 1, "test_memcmp failed, not greater.");
 
-  a[1] = set;
-  a[2] = 'a';
+  a[10] = set;
+  a[15] = 'a';
   i32 less = memcmp(a, b, n);
   test_expression(less == -1, "test_memcmp failed, not less.");
+}
+
+void test_memchr() {
+  const u64 n = 10;
+  u8 a[n];
+  memset(a, 0, n);
+  const u8 find = 'a';
+  const u8 cant_find = 'd';
+  a[n - 2] = find;
+
+  // found
+  u8 * result = (u8 *)memchr(a, find, n);
+  test_expression(*result == find, "test_memchr failed, wrong found.");
+
+  // not found
+  result = (u8 *)memchr(a, cant_find, n);
+  test_expression(result == NULL, "test_memchr failed, wrong not found.");
 }
 
 int main() {
@@ -97,6 +114,7 @@ int main() {
   test_memcpy();
   test_memmove();
   test_memcmp();
+  test_memchr();
 
   if (tests_failed == 0) {
     println0("tests pass.");

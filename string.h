@@ -27,7 +27,7 @@ void * memmove(void * d, const void * s, u64 n);
 i32 memcmp(const void * s1, const void * s2, u64 n);
 
 // search for unsigned u8 c in first n bytes of s
-// void * memchr(const void * s, i32 c, u64 n);
+void * memchr(const void * s, i32 c, u64 n);
 
 // copies first n bytes of s to d until c (unsigned u8). non-overlapping.
 // void * memccpy(void * d, const void * s, i32 c, u64 n);

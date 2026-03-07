@@ -1,6 +1,6 @@
 # libc's string.h but in x64
 
-Reimplementing some of libc's string functions but in x64 assembly. Runs on linux.
+Reimplementing some of libc's string functions but in x64 assembly. Runs on linux. Expects System V ABI.
 
 `test.c` uses `-nostdlib`. `art0.s` sets up the main function.
 
@@ -12,12 +12,3 @@ Reimplementing some of libc's string functions but in x64 assembly. Runs on linu
 - [x] memcmp
 - [ ] memchr
 - [ ] memccpy
-- [ ] strcpy
-- [ ] strlen
-- [ ] strncpy
-- [ ] strcat
-- [ ] strncat
-- [ ] strspn
-- [ ] strpbrk
-- [ ] strstr
-- [ ] strtok
