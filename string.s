@@ -9,8 +9,6 @@
 
 .section .text
 
-# using AVX registers. should probably check, use CPUID
-
 # void * memset(const void * s, i32 c, u64 n);
 memset:
     push rdi
@@ -18,67 +16,65 @@ memset:
     push rdx
     and rdx, 0xffffffffffffffe0
 
-    call memset_32_byte
+    call memset32
 
     mov rdi, rax
     mov rsi, QWORD PTR [rsp+8]
     mov rdx, QWORD PTR [rsp]
     and rdx, 0x10
 
-    call memset_16_byte
+    call memset16
 
     pop rdx
     and rdx, 0x0f
     pop rsi
     mov rdi, rax
 
-    call memset_byte
+    call memset1
 
     pop rax
     ret
 
 # args same as memset. returns end
-memset_32_byte:
+memset32:
     push rsi
     vpbroadcastb ymm0, [rsp]
-    xor rax, rax
-_memset_32_byte_start:
-    cmp rax, rdx
-    je _memset_32_byte_end
-    vmovdqu YMMWORD PTR [rdi + rax], ymm0
-    add rax, 32
-    jmp _memset_32_byte_start
-_memset_32_byte_end:
-    lea rax, [rdi + rax]
+.Lmemset32.loop:
+    test rdx, rdx
+    jz .Lmemset32.end
+    vmovdqu YMMWORD PTR [rdi], ymm0
+    sub rdx, 32
+    add rdi, 32
+    jmp .Lmemset32.loop
+.Lmemset32.end:
+    mov rax, rdi
     pop rsi
     ret
 
-memset_16_byte:
+memset16:
     push rsi
     vpbroadcastb xmm0, [rsp]
-    xor rax, rax
-_memset_16_byte_start:
-    cmp rax, rdx
-    je _memset_16_byte_end
-    vmovdqu XMMWORD PTR [rdi + rax], xmm0
-    add rax, 16
-    jmp _memset_16_byte_start
-_memset_16_byte_end:
-    lea rax, [rdi + rax]
+.Lmemset16.loop:
+    test rdx, rdx
+    je .Lmemset16.end
+    vmovdqu XMMWORD PTR [rdi], xmm0
+    sub rdx, 16
+    add rdi, 16
+    jmp .Lmemset16.loop
+.Lmemset16.end:
+    lea rax, [rdi]
     pop rsi
     ret
 
-# TODO: use rep prefix (rcx as counter)
-memset_byte:
-    xor rax, rax
-_memset_start:
-    cmp rax, rdx
-    je _memset_end
-    mov BYTE PTR [rdi + rax], sil
-    inc rax
-    jmp _memset_start
-_memset_end:
-    mov rax, rdi
+memset1:
+.Lmemset1.loop:
+    test rdx, rdx
+    je .Lmemset1.end
+    mov BYTE PTR [rdi], sil
+    inc rdi
+    dec rdx
+    jmp .Lmemset1.loop
+.Lmemset1.end:
     ret
 
 # void * memcpy(void * d, const void * s, u64 n);
