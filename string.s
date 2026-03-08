@@ -79,16 +79,45 @@ memset1:
 
 # void * memcpy(void * d, const void * s, u64 n);
 memcpy:
-    xor rax, rax
-    mov rcx, rdi
-_memcpy_start:
-    cmp rax, rdx
-    je _memcpy_end
-    movsb
-    inc rax
-    jmp _memcpy_start
-_memcpy_end:
-    mov rax, rcx
+    push rdi
+    push rsi
+    push rdx
+    and rdx, 0xffffffffffffffe0
+
+    call memcpy32
+
+    mov rdi, rax
+    mov rsi, rdx
+    mov rdx, [rsp]
+    and rdx, 0x1f
+
+    call memcpy1
+
+    pop rdx
+    pop rsi
+    pop rax
+
+    ret
+
+memcpy32:
+.Lmemcpy32.loop:
+    test rdx, rdx
+    jz .Lmemcpy32.end
+    sub rdx, 32
+    vmovdqu ymm0, YMMWORD PTR [rsi]
+    vmovdqu YMMWORD PTR [rdi], ymm0
+    add rdi, 32
+    add rsi, 32
+    jmp .Lmemcpy32.loop
+.Lmemcpy32.end:
+    mov rax, rdi
+    mov rdx, rsi
+    ret
+
+memcpy1:
+    mov rax, rdi
+    mov rcx, rdx
+    rep movsb
     ret
 
 # void * memmove(void * d, const void * s, u64 n);
