@@ -16,7 +16,7 @@ void test_expression(u8 x, const char * msg) {
   }
 }
 
-void test_memset_n(u64 n) {
+void test_memset(u64 n) {
   u8 set = 'A';
   u8 m[n];
 
@@ -28,22 +28,7 @@ void test_memset_n(u64 n) {
   test_expression(x == m, "test_memset return failed.");
 }
 
-void test_memset() {
-  const u64 n1 = 32 * 3 + 16 + 5;
-  const u64 n2 = 16 + 7;
-  const u64 n3 = 11;
-  const u64 n4 = 32 * 4 + 5;
-  const u64 n5 = 32 * 5 + 16;
-
-  test_memset_n(n1);
-  test_memset_n(n2);
-  test_memset_n(n3);
-  test_memset_n(n4);
-  test_memset_n(n5);
-}
-
-void test_memcpy() {
-  const u64 n = 100;
+void test_memcpy(u64 n) {
   u8 set = '1';
   u8 m[n], e[n];
 
@@ -57,9 +42,8 @@ void test_memcpy() {
   test_expression(x == m, "test_memcpy return failed.");
 }
 
-void test_memmove() {
+void test_memmove(u64 n) {
   // non overlapping
-  const u64 n = 100;
   u8 set = '1';
   u8 m[n], e[n];
 
@@ -85,8 +69,7 @@ void test_memmove() {
   test_expression(x == b, "test_memmove (overlapping) return failed.");
 }
 
-void test_memcmp() {
-  const u64 n = 200;
+void test_memcmp(u64 n) {
   const u8 set = 'b';
   u8 a[n], b[n];
   memset(a, set, n);
@@ -105,8 +88,7 @@ void test_memcmp() {
   test_expression(less == -1, "test_memcmp failed, not less.");
 }
 
-void test_memchr() {
-  const u64 n = 100;
+void test_memchr(u64 n) {
   u8 a[n];
   memset(a, 0, n);
   const u8 find = 'a';
@@ -122,8 +104,7 @@ void test_memchr() {
   test_expression(result == NULL, "test_memchr failed, wrong not found.");
 }
 
-void test_memccpy() {
-  const u64 n = 100;
+void test_memccpy(u64 n) {
   u8 a[n], b[n];
 
   int until = 'd';
@@ -162,14 +143,35 @@ void test_memccpy() {
   test_expression(result == b, "test_memccpy failed, wrong copy none return.");
 }
 
-int main() {
-  test_memset();
-  test_memcpy();
-  test_memmove();
-  test_memcmp();
-  test_memchr();
-  test_memccpy();
+void run_tests() {
+  const u64 num_tests = 2;
+  const u64 num_n = 5;
+  const u64 n[5] = {
+    32 * 3 + 16 + 5,
+    16 + 7,
+    11,
+    32 * 4 + 5,
+    32 * 5 + 16,
+  };
 
+  void (*tests[6])(u64 n) = {
+    test_memset,
+    test_memcpy,
+    test_memmove,
+    test_memcmp,
+    test_memchr,
+    test_memccpy,
+  };
+
+  for (u64 i = 0; i < num_tests; i++) {
+    for (u64 j = 0; j < num_n; j++) {
+      tests[i](n[j]);
+    }
+  }
+}
+
+int main() {
+  run_tests();
   if (tests_failed == 0) {
     println0("tests pass.");
     return 0;
