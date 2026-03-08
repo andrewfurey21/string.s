@@ -16,8 +16,7 @@ void test_expression(u8 x, const char * msg) {
   }
 }
 
-void test_memset() {
-  const u64 n = 10;
+void test_memset_n(u64 n) {
   u8 set = 'A';
   u8 m[n];
 
@@ -29,8 +28,22 @@ void test_memset() {
   test_expression(x == m, "test_memset return failed.");
 }
 
+void test_memset() {
+  const u64 n1 = 32 * 3 + 16 + 5;
+  const u64 n2 = 16 + 7;
+  const u64 n3 = 11;
+  const u64 n4 = 32 * 4 + 5;
+  const u64 n5 = 32 * 5 + 16;
+
+  test_memset_n(n1);
+  test_memset_n(n2);
+  test_memset_n(n3);
+  test_memset_n(n4);
+  test_memset_n(n5);
+}
+
 void test_memcpy() {
-  const u64 n = 10;
+  const u64 n = 100;
   u8 set = '1';
   u8 m[n], e[n];
 
@@ -46,7 +59,7 @@ void test_memcpy() {
 
 void test_memmove() {
   // non overlapping
-  const u64 n = 10;
+  const u64 n = 100;
   u8 set = '1';
   u8 m[n], e[n];
 
@@ -73,7 +86,7 @@ void test_memmove() {
 }
 
 void test_memcmp() {
-  const u64 n = 20;
+  const u64 n = 200;
   const u8 set = 'b';
   u8 a[n], b[n];
   memset(a, set, n);
@@ -93,7 +106,7 @@ void test_memcmp() {
 }
 
 void test_memchr() {
-  const u64 n = 10;
+  const u64 n = 100;
   u8 a[n];
   memset(a, 0, n);
   const u8 find = 'a';
@@ -110,7 +123,7 @@ void test_memchr() {
 }
 
 void test_memccpy() {
-  const u64 n = 10;
+  const u64 n = 100;
   u8 a[n], b[n];
 
   int until = 'd';
